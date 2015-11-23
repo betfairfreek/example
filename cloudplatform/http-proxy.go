@@ -2,24 +2,19 @@ package main
 
 import (
 	"fmt"
+	"github.com/gorilla/mux"
 	"net/http"
+	."github.com/example/cloudplatform/handler"
 )
 
 const PORT string = ":8080"
 
-func homeHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprint(w,"<h1>HomePage</h1>")
-}
-
-func loginHandler(w http.ResponseWriter, r *http.Request) {
-
-}
-
 func main() {
+	r := mux.NewRouter()
 
-	http.HandleFunc("/", homeHandler)
-	http.HandleFunc("/login", loginHandler)
+	r.HandleFunc("/getMe", GetMe)
+	r.HandleFunc("/loggin",Loggin)
 
-	fmt.Println("Http-Server Started on port", PORT)
-	http.ListenAndServe(PORT, nil)
+	fmt.Println("Http-Proxy Listening on port", PORT)
+	http.ListenAndServe(PORT, r)
 }
